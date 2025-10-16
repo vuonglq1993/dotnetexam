@@ -1,0 +1,56 @@
+@model IEnumerable<dynamic>
+@{
+    ViewData["Title"] = "Rental Report";
+}
+<h2>Rental Report</h2>
+
+<form asp-action="Report" method="get">
+    <div class="row">
+        <div class="col-md-4">
+            <label>Start Date</label>
+            <input type="date" name="startDate" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label>End Date</label>
+            <input type="date" name="endDate" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label>&nbsp;</label>
+            <button type="submit" class="btn btn-success form-control">Generate</button>
+        </div>
+    </div>
+</form>
+
+@if (Model != null && Model.Any())
+{
+    <hr />
+    <table class="table table-bordered mt-3">
+        <thead>
+        <tr>
+            <th>No</th>
+            <th>Book name</th>
+            <th>Rental date</th>
+            <th>Return date</th>
+            <th>Customer name</th>
+            <th>Quantity</th>
+        </tr>
+        </thead>
+        <tbody>
+        @{
+            int i = 1;
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>@item.Title</td>
+                    <td>@item.RentalDate.ToShortDateString()</td>
+                    <td>@item.ReturnDate.ToShortDateString()</td>
+                    <td>@item.FullName</td>
+                    <td>@item.Quantity</td>
+                </tr>
+                i++;
+            }
+        }
+        </tbody>
+    </table>
+}

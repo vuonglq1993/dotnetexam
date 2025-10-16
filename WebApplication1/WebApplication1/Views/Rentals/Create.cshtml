@@ -1,0 +1,41 @@
+@{
+    ViewData["Title"] = "Rent Books";
+}
+<h2>Rent Comic Books</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label>Rental Date</label>
+        <input type="date" name="rentalDate" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label>Return Date</label>
+        <input type="date" name="returnDate" class="form-control" required />
+    </div>
+
+    <h4 class="mt-3">Select Books:</h4>
+    <table class="table">
+        <thead>
+        <tr><th>Book</th><th>Quantity</th></tr>
+        </thead>
+        <tbody>
+        @foreach (var comic in ViewBag.Comics)
+        {
+            <tr>
+                <td>
+                    <input type="checkbox" name="comicIds" value="@comic.ComicBookID" />
+                    @comic.Title (@comic.PricePerDay.ToString("C")/day)
+                </td>
+                <td><input type="number" name="quantities" value="1" min="1" class="form-control" /></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-success mt-2">Submit Rental</button>
+</form>

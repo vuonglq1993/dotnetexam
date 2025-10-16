@@ -1,0 +1,43 @@
+@model IEnumerable<dynamic>
+@{
+    ViewData["Title"] = "Rental Report";
+}
+<h2>Rental Report</h2>
+
+<form method="get" class="mb-3">
+    <label>Start Date:</label>
+    <input type="date" name="startDate" value="@ViewBag.StartDate" />
+    <label>End Date:</label>
+    <input type="date" name="endDate" value="@ViewBag.EndDate" />
+    <button type="submit" class="btn btn-primary">Filter</button>
+</form>
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>No</th>
+        <th>Book Name</th>
+        <th>Rental Date</th>
+        <th>Return Date</th>
+        <th>Customer Name</th>
+        <th>Quantity</th>
+    </tr>
+    </thead>
+    <tbody>
+    @{
+        int i = 1;
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>@i</td>
+                <td>@item.Title</td>
+                <td>@(((DateTime)item.RentalDate).ToString("dd/MM/yyyy"))</td>
+                <td>@(((DateTime)item.ReturnDate).ToString("dd/MM/yyyy"))</td>
+                <td>@item.FullName</td>
+                <td>@item.Quantity</td>
+            </tr>
+            i++;
+        }
+    }
+    </tbody>
+</table>
